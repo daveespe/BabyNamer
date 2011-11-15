@@ -1,0 +1,2 @@
+serviceClass: com.espefamily.david.babynamer.service.NameService
+path: ED20CF64A7DB91173C05F8F37734DDCE.gwt.rpc
