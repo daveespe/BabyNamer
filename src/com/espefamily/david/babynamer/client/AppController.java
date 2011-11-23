@@ -1,5 +1,7 @@
 package com.espefamily.david.babynamer.client;
 
+import com.espefamily.david.babynamer.client.presenter.ParentsPresenter;
+import com.espefamily.david.babynamer.client.presenter.Presenter;
 import com.espefamily.david.babynamer.service.NameServiceAsync;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -15,11 +17,19 @@ public class AppController implements ValueChangeHandler<String> {
 	private NameServiceAsync rpcService;
 	private SimpleEventBus eventBus;
 	
+	private ParentsPresenter parentsPresenter;
+	
 	public AppController(NameServiceAsync rpcService, SimpleEventBus eventBus) {
 		this.rpcService = rpcService;
 		this.eventBus = eventBus;
+		
+		initPresenters(rpcService, eventBus);
 	}
 
+	private void initPresenters(NameServiceAsync rpcService, SimpleEventBus eventBus) {
+		parentsPresenter = new ParentsPresenter(rpcService, eventBus);
+	}
+	
 	public void go(RootPanel rootPanel) {
 	    this.rootPanel = rootPanel;
 	    bind();
@@ -41,9 +51,7 @@ public class AppController implements ValueChangeHandler<String> {
 	      Presenter presenter = null;
 
 	      if (token.equals("main")) {
-//	        presenter = new ParentsPresenter(rpcService, eventBus, new DisplayNames());
-	    	  DisplayNames dn = new DisplayNames();
-	    	  rootPanel.add(dn);
+	        presenter = parentsPresenter;
 	      }
 	      else if (token.equals("add")) {;
 //	        presenter = new EditContactPresenter(rpcService, eventBus, new EditContactView());
@@ -53,7 +61,7 @@ public class AppController implements ValueChangeHandler<String> {
 	      }
 
 	      if (presenter != null) {
-	        presenter.go();
+	        presenter.setViewVisible(true);
 	      }
 	    }
 	}

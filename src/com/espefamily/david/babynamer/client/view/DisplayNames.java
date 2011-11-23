@@ -1,4 +1,4 @@
-package com.espefamily.david.babynamer.client;
+package com.espefamily.david.babynamer.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
